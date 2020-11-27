@@ -17,3 +17,18 @@ func isEvenOrOddNumbers(namber: Int) {
 
 isEvenOrOddNumbers(namber: 7)
 isEvenOrOddNumbers(namber: 4)
+
+
+
+// Задание 2
+//
+func isDivisionBy3(namber: Int) {
+    if (namber % 3) == 0 {
+        print("Число \(namber) делется на 3 без остатко, результат от деление \(namber / 3)")
+    } else {
+        print("Число \(namber) на 3 без остатка не делится, остаток от деления \(namber % 3)")
+    }
+}
+
+isDivisionBy3(namber: 12)
+isDivisionBy3(namber: 13)
