@@ -7,28 +7,40 @@ import PlaygroundSupport
 
 // Задание 1
 //
-func isEvenOrOddNumbers(namber: Int) {
-    if (namber % 2) == 0 {
-        print("Число \(namber) - четное")
-    } else {
-        print("Число \(namber) - нечетное")
-    }
+func isEvenOrOddNumbers(namber: Int) -> Bool {
+    return ((namber % 2) == 0) ? true : false
 }
 
-isEvenOrOddNumbers(namber: 7)
-isEvenOrOddNumbers(namber: 4)
-
+if isEvenOrOddNumbers(namber: 7) {
+    print("Число четное")
+} else {
+    print("Число нечетное")
+}
 
 
 // Задание 2
 //
-func isDivisionBy3(namber: Int) {
-    if (namber % 3) == 0 {
-        print("Число \(namber) делется на 3 без остатко, результат от деление \(namber / 3)")
-    } else {
-        print("Число \(namber) на 3 без остатка не делится, остаток от деления \(namber % 3)")
-    }
+func isDivisionBy3(namber: Int) -> Bool {
+    return ((namber % 3) == 0) ? true : false
 }
 
-isDivisionBy3(namber: 12)
-isDivisionBy3(namber: 13)
+if isDivisionBy3(namber: 15) {
+    print("Число делется на 3 без остаткa")
+} else {
+    print("Число на 3 без остатка не делится")
+}
+
+
+
+// Задание 3
+//
+func getArray() -> [Int] {
+    var array = [Int]()
+    for num in 1...100 {
+        array.append(num)
+    }
+    return array
+}
+
+var arrayOfNamber = getArray()
+print(arrayOfNamber)
