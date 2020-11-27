@@ -7,11 +7,11 @@ import PlaygroundSupport
 
 // Задание 1
 //
-func isEvenOrOddNumbers(namber: Int) -> Bool {
-    return ((namber % 2) == 0) ? true : false
+func isEvenOrOddNumbers(number: Int) -> Bool {
+    return ((number % 2) == 0) ? true : false
 }
 
-if isEvenOrOddNumbers(namber: 7) {
+if isEvenOrOddNumbers(number: 7) {
     print("Число четное")
 } else {
     print("Число нечетное")
@@ -20,11 +20,11 @@ if isEvenOrOddNumbers(namber: 7) {
 
 // Задание 2
 //
-func isDivisionBy3(namber: Int) -> Bool {
-    return ((namber % 3) == 0) ? true : false
+func isDivisionBy3(number: Int) -> Bool {
+    return ((number % 3) == 0) ? true : false
 }
 
-if isDivisionBy3(namber: 15) {
+if isDivisionBy3(number: 15) {
     print("Число делется на 3 без остаткa")
 } else {
     print("Число на 3 без остатка не делится")
@@ -42,5 +42,6 @@ func getArray() -> [Int] {
     return array
 }
 
-var arrayOfNamber = getArray()
-print(arrayOfNamber)
+var arrayOfNumber = getArray()
+print(arrayOfNumber)
+
