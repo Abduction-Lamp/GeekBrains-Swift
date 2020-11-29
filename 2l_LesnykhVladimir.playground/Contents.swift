@@ -76,3 +76,34 @@ for value in arrayOfNumber {
 }
 
 print("Новый массив:\n\(arrayOfNumber)\n")
+
+
+
+// Задача 5*
+//
+func fibonacci(n: UInt) -> Decimal? {
+    
+    var previous: Decimal = Decimal(0)
+    var current: Decimal = Decimal(0)
+    var temp: Decimal = Decimal(0)
+    
+    switch n {
+    case 0:
+        return nil
+    case 1:
+        current = 0
+    case 2:
+        current = 1
+    default:
+        previous = 0
+        current = 1
+        for _ in 3...n {
+            temp = current
+            current += previous
+            previous = temp
+        }
+    }
+    return current
+}
+
+print("Фибоначчи 100: ", fibonacci(n: UInt(100)) ?? "nil")
