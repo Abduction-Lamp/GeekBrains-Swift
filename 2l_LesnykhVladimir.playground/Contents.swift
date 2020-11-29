@@ -107,3 +107,40 @@ func fibonacci(n: UInt) -> Decimal? {
 }
 
 print("Фибоначчи 100: ", fibonacci(n: UInt(100)) ?? "nil")
+
+
+
+// Задание 6*
+//
+func getArrayPrimeOfNumber(n: UInt) -> [UInt] {
+    var primes = [UInt?]()
+    var arrayOutPut = [UInt]()
+
+    primes.append(nil)  // вычеркнули 0
+    primes.append(nil)  // вычеркнули 1
+
+    for i in 2...n {
+        primes.append(i)
+    }
+
+    var p = 2
+    while p < n {
+        var i = p + p
+        while i <= n  {
+            primes[i] = nil
+            i += p
+        }
+        p += 1
+        while p <= n && primes[p] == nil {
+            p += 1
+        }
+    }
+
+    for prime in primes where prime != nil {
+        arrayOutPut.append(prime!)
+    }
+    
+    return arrayOutPut
+}
+
+print("\nПростые числа: \n\(getArrayPrimeOfNumber(n: 100)) \n")
