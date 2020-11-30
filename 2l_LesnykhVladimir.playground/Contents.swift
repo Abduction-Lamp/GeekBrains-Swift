@@ -67,19 +67,8 @@ print("Новый массив:\n\(arrayOfNumber)\n")
 arrayOfNumber = getArray()
 print("Исходный массив:\n \(arrayOfNumber)\n")
 
-//  Переписал цикл с дополнением where
-//
-//for value in arrayOfNumber {
-//    if isEvenOrOddNumbers(number: value) {
-//        arrayOfNumber.remove(at: arrayOfNumber.firstIndex(of: value)!)
-//        continue
-//    }
-//    if isDivisionBy3(number: value) {
-//        arrayOfNumber.remove(at: arrayOfNumber.firstIndex(of: value)!)
-//    }
-//}
-for value in arrayOfNumber where isEvenOrOddNumbers(number: value)
-    || isDivisionBy3(number: value) {
+for value in arrayOfNumber where
+    isEvenOrOddNumbers(number: value) || isDivisionBy3(number: value) {
         arrayOfNumber.remove(at: arrayOfNumber.firstIndex(of: value)!)
 }
 
@@ -116,7 +105,11 @@ func fibonacci(n: UInt) -> Decimal? {
 
 print("Фибоначчи 100: ", fibonacci(n: UInt(100)) ?? "nil")
 
-
+//
+//  Почему-то я подумал что нужно было просто вывести сотое число в последовательности
+//  а воказываеться нужно было массив. побыстренькому переделал и смержил с пул-реквестом
+//  надеюсь пройдет
+//
 func fibonacci2(n: UInt) -> [Decimal]? {
     var arr = [Decimal]()
     
@@ -132,7 +125,6 @@ func fibonacci2(n: UInt) -> [Decimal]? {
         arr.append(0)
         arr.append(1)
         for _ in 2...(n-1) {
-//            print(arr.endIndex)
             arr.append(arr[arr.endIndex-2] + arr[arr.endIndex-1])
         }
     }
@@ -177,4 +169,3 @@ func getArrayPrimeOfNumber(n: UInt) -> [UInt] {
 }
 
 print("\nПростые числа: \n\(getArrayPrimeOfNumber(n: 542)) \n")
-
