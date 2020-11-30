@@ -1,8 +1,10 @@
 //
-// Лесных Владимир
+//  main.swift
+//  Try
+//
+//  Created by Владимир on 29.11.2020.
 //
 
-import PlaygroundSupport
 import Foundation
 
 
@@ -65,14 +67,20 @@ print("Новый массив:\n\(arrayOfNumber)\n")
 arrayOfNumber = getArray()
 print("Исходный массив:\n \(arrayOfNumber)\n")
 
-for value in arrayOfNumber {
-    if isEvenOrOddNumbers(number: value) {
+//  Переписал цикл с дополнением where
+//
+//for value in arrayOfNumber {
+//    if isEvenOrOddNumbers(number: value) {
+//        arrayOfNumber.remove(at: arrayOfNumber.firstIndex(of: value)!)
+//        continue
+//    }
+//    if isDivisionBy3(number: value) {
+//        arrayOfNumber.remove(at: arrayOfNumber.firstIndex(of: value)!)
+//    }
+//}
+for value in arrayOfNumber where isEvenOrOddNumbers(number: value)
+    || isDivisionBy3(number: value) {
         arrayOfNumber.remove(at: arrayOfNumber.firstIndex(of: value)!)
-        continue
-    }
-    if isDivisionBy3(number: value) {
-        arrayOfNumber.remove(at: arrayOfNumber.firstIndex(of: value)!)
-    }
 }
 
 print("Новый массив:\n\(arrayOfNumber)\n")
@@ -109,6 +117,31 @@ func fibonacci(n: UInt) -> Decimal? {
 print("Фибоначчи 100: ", fibonacci(n: UInt(100)) ?? "nil")
 
 
+func fibonacci2(n: UInt) -> [Decimal]? {
+    var arr = [Decimal]()
+    
+    switch n {
+    case 0:
+        return nil
+    case 1:
+        arr.append(0)
+    case 2:
+        arr.append(0)
+        arr.append(1)
+    default:
+        arr.append(0)
+        arr.append(1)
+        for _ in 2...(n-1) {
+//            print(arr.endIndex)
+            arr.append(arr[arr.endIndex-2] + arr[arr.endIndex-1])
+        }
+    }
+    return arr
+}
+
+print("Фибоначчи 100: ", fibonacci2(n: UInt(100)) ?? "nil")
+
+
 
 // Задание 6*
 //
@@ -135,7 +168,7 @@ func getArrayPrimeOfNumber(n: UInt) -> [UInt] {
             p += 1
         }
     }
-
+    
     for prime in primes where prime != nil {
         arrayOutPut.append(prime!)
     }
@@ -143,4 +176,5 @@ func getArrayPrimeOfNumber(n: UInt) -> [UInt] {
     return arrayOutPut
 }
 
-print("\nПростые числа: \n\(getArrayPrimeOfNumber(n: 100)) \n")
+print("\nПростые числа: \n\(getArrayPrimeOfNumber(n: 542)) \n")
+
