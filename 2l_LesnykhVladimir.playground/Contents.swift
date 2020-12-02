@@ -168,7 +168,7 @@ func getArrayPrimeOfNumber(n: UInt) -> [UInt] {
 //    Решение в стили Swift
 //
     for (index, number) in primes.enumerated() where number != nil {
-        for i in stride(from: (index * 2), through: (primes.count - 1), by: index) where primes[i] != nil {
+        for i in stride(from: (index * 2), to: primes.count, by: index) where primes[i] != nil {
             primes[i] = nil
         }
     }
