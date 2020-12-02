@@ -148,16 +148,28 @@ func getArrayPrimeOfNumber(n: UInt) -> [UInt] {
         primes.append(i)
     }
 
-    var p = 2
-    while p < n {
-        var i = p + p
-        while i <= n  {
+//
+//    Решение в стили С/С++
+//
+//    var p = 2
+//    while p < n {
+//        var i = p + p
+//        while i <= n  {
+//            primes[i] = nil
+//            i += p
+//        }
+//        p += 1
+//        while p <= n && primes[p] == nil {
+//            p += 1
+//        }
+//    }
+   
+//
+//    Решение в стили Swift
+//
+    for (index, number) in primes.enumerated() where number != nil {
+        for i in stride(from: (index * 2), through: (primes.count - 1), by: index) where primes[i] != nil {
             primes[i] = nil
-            i += p
-        }
-        p += 1
-        while p <= n && primes[p] == nil {
-            p += 1
         }
     }
     
