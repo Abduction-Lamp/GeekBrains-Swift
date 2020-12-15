@@ -1,13 +1,12 @@
 //
 //  Лесных Владимир
 //
-//  Created by Владимир on 24.11.2020.
 //
 
 import Foundation
 
 
-// ЗАДАНИЕ 1
+// MARK: ЗАДАНИЕ 1
 //
 // ax^2 + bx + c = 0
 //
@@ -42,8 +41,7 @@ if a != 0 {
 
 
 
-// ЗАДАНИЕ 2
-//
+// MARK: ЗАДАНИЕ 2
 //
 let aCathetus = Double(3)
 let bCathetus = Double(4)
@@ -58,9 +56,7 @@ print("\n\n2. Площадь = \(area), периметр = \(perimeter) и ги�
 
 
 
-
-// ЗАДАНИЕ 3
-//
+// MARK: ЗАДАНИЕ 3
 //
 var contribution: Double = 100000
 var percent: Double = 10
