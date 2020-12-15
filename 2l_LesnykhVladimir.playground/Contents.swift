@@ -2,27 +2,25 @@
 //  main.swift
 //  Владимир Лесных
 //
-//  Created by Владимир on 29.11.2020.
 //
 
 import Foundation
 
 
-// Задание 1
+// MARK: Задание 1
 //
 func isEvenOrOddNumbers(number: Int) -> Bool {
     return ((number % 2) == 0) ? true : false
 }
 
-
-// Задание 2
+// MARK: Задание 2
 //
 func isDivisionBy3(number: Int) -> Bool {
     return ((number % 3) == 0) ? true : false
 }
 
 
-// Задание 3
+// MARK: Задание 3
 //
 func getArray() -> [Int] {
     var array = [Int]()
@@ -36,7 +34,11 @@ var arrayOfNumber = getArray()
 print("Исходный массив:\n \(arrayOfNumber)\n")
 
 
-// Задание 4
+
+// MARK: Задание 4
+//
+
+// Первый способ O(n^2)
 //
 var i = 0
 while i < arrayOfNumber.count {
@@ -50,19 +52,15 @@ while i < arrayOfNumber.count {
     }
     i += 1
 }
-
 print("Новый массив:\n\(arrayOfNumber)\n")
 
 
-// Второй способ
 //
-// Но на сколько я понял сложность это алгоритма выше
+// Второй способ O(n^3)
+//
 // for value in arrayOfNumber   = O(n)
 // arrayOfNumber.remove         = O(n)
 // arrayOfNumber.firstIndex     = O(n)
-//                        ИТОГО = O(n^3)
-//
-// в первом способое получаеться  O(n^2)
 //
 arrayOfNumber = getArray()
 print("Исходный массив:\n \(arrayOfNumber)\n")
@@ -71,46 +69,13 @@ for value in arrayOfNumber where
     isEvenOrOddNumbers(number: value) || isDivisionBy3(number: value) {
         arrayOfNumber.remove(at: arrayOfNumber.firstIndex(of: value)!)
 }
-
 print("Новый массив:\n\(arrayOfNumber)\n")
 
 
 
-// Задача 5*
+// MARK: Задача 5*
 //
-func fibonacci(n: UInt) -> Decimal? {
-    
-    var previous: Decimal = Decimal(0)
-    var current: Decimal = Decimal(0)
-    var temp: Decimal = Decimal(0)
-    
-    switch n {
-    case 0:
-        return nil
-    case 1:
-        current = 0
-    case 2:
-        current = 1
-    default:
-        previous = 0
-        current = 1
-        for _ in 3...n {
-            temp = current
-            current += previous
-            previous = temp
-        }
-    }
-    return current
-}
-
-print("Фибоначчи 100: ", fibonacci(n: UInt(100)) ?? "nil")
-
-//
-//  Почему-то я подумал что нужно было просто вывести сотое число в последовательности
-//  а воказываеться нужно было массив. побыстренькому переделал и смержил с пул-реквестом
-//  надеюсь пройдет
-//
-func fibonacci2(n: UInt) -> [Decimal]? {
+func fibonacci(n: UInt) -> [Decimal]? {
     var arr = [Decimal]()
     
     switch n {
@@ -131,13 +96,14 @@ func fibonacci2(n: UInt) -> [Decimal]? {
     return arr
 }
 
-print("Фибоначчи 100: ", fibonacci2(n: UInt(100)) ?? "nil")
+print("Фибоначчи 100: \n", fibonacci(n: UInt(100)) ?? "nil")
 
 
 
-// Задание 6*
+// MARK: Задание 6*
 //
 func getArrayPrimeOfNumber(n: UInt) -> [UInt] {
+    
     var primes = [UInt?]()
     var arrayOutPut = [UInt]()
 
@@ -148,25 +114,6 @@ func getArrayPrimeOfNumber(n: UInt) -> [UInt] {
         primes.append(i)
     }
 
-//
-//    Решение в стили С/С++
-//
-//    var p = 2
-//    while p < n {
-//        var i = p + p
-//        while i <= n  {
-//            primes[i] = nil
-//            i += p
-//        }
-//        p += 1
-//        while p <= n && primes[p] == nil {
-//            p += 1
-//        }
-//    }
-   
-//
-//    Решение в стили Swift
-//
     for (index, number) in primes.enumerated() where number != nil {
         for i in stride(from: (index * 2), to: primes.count, by: index) where primes[i] != nil {
             primes[i] = nil
@@ -180,4 +127,5 @@ func getArrayPrimeOfNumber(n: UInt) -> [UInt] {
     return arrayOutPut
 }
 
-print("\nПростые числа: \n\(getArrayPrimeOfNumber(n: 542)) \n")
+let primeArray = getArrayPrimeOfNumber(n: 542)
+print("\nПервые \(primeArray.count) простых чисел: \n\(primeArray)\n")
