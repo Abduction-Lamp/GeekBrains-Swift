@@ -22,23 +22,23 @@ func isDivisionBy3(number: Int) -> Bool {
 
 // MARK: Задание 3
 //
-func getArray() -> [Int] {
+func getArray(size: UInt) -> [Int] {
     var array = [Int]()
-    for num in 1...100 {
-        array.append(num)
+    for num in 1...size {
+        array.append(Int(num))
     }
     return array
 }
 
-var arrayOfNumber = getArray()
-print("Исходный массив:\n \(arrayOfNumber)\n")
+var arrayOfNumber = getArray(size: 100)
+print("Исходный массив:\n \(arrayOfNumber)")
 
 
 
 // MARK: Задание 4
 //
 
-// Первый способ O(n^2)
+// Первый способ    O(n^2)
 //
 var i = 0
 while i < arrayOfNumber.count {
@@ -55,15 +55,14 @@ while i < arrayOfNumber.count {
 print("Новый массив:\n\(arrayOfNumber)\n")
 
 
+// Второй способ (в стиле Swift)    O(n^3)
 //
-// Второй способ O(n^3)
+// for value in arrayOfNumber       = O(n)
+// arrayOfNumber.remove             = O(n)
+// arrayOfNumber.firstIndex         = O(n)
 //
-// for value in arrayOfNumber   = O(n)
-// arrayOfNumber.remove         = O(n)
-// arrayOfNumber.firstIndex     = O(n)
-//
-arrayOfNumber = getArray()
-print("Исходный массив:\n \(arrayOfNumber)\n")
+arrayOfNumber = getArray(size: 100)
+print("Исходный массив:\n\(arrayOfNumber)")
 
 for value in arrayOfNumber where
     isEvenOrOddNumbers(number: value) || isDivisionBy3(number: value) {
@@ -73,12 +72,12 @@ print("Новый массив:\n\(arrayOfNumber)\n")
 
 
 
-// MARK: Задача 5*
+// MARK: Задача 5*  Фибоначчи
 //
-func fibonacci(n: UInt) -> [Decimal]? {
+func fibonacci(size: UInt) -> [Decimal]? {
     var arr = [Decimal]()
     
-    switch n {
+    switch size {
     case 0:
         return nil
     case 1:
@@ -89,20 +88,20 @@ func fibonacci(n: UInt) -> [Decimal]? {
     default:
         arr.append(0)
         arr.append(1)
-        for _ in 2...(n-1) {
+        for _ in 2..<size {
             arr.append(arr[arr.endIndex-2] + arr[arr.endIndex-1])
         }
     }
     return arr
 }
 
-print("Фибоначчи 100: \n", fibonacci(n: UInt(100)) ?? "nil")
+print("Фибоначчи 100: \n", fibonacci(size: UInt(100)) ?? "nil")
 
 
 
-// MARK: Задание 6*
+// MARK: Задание 6*     Решето Эратосфена
 //
-func getArrayPrimeOfNumber(n: UInt) -> [UInt] {
+func getArrayPrimeOfNumber(until: UInt) -> [UInt] {
     
     var primes = [UInt?]()
     var arrayOutPut = [UInt]()
@@ -110,7 +109,7 @@ func getArrayPrimeOfNumber(n: UInt) -> [UInt] {
     primes.append(nil)  // вычеркнули 0
     primes.append(nil)  // вычеркнули 1
 
-    for i in 2...n {
+    for i in 2...until {
         primes.append(i)
     }
 
@@ -127,5 +126,5 @@ func getArrayPrimeOfNumber(n: UInt) -> [UInt] {
     return arrayOutPut
 }
 
-let primeArray = getArrayPrimeOfNumber(n: 542)
-print("\nПервые \(primeArray.count) простых чисел: \n\(primeArray)\n")
+let primeArray = getArrayPrimeOfNumber(until: 542)
+print("\n\(primeArray.count) первых простых чисел: \n\(primeArray)\n")
