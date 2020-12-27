@@ -31,7 +31,7 @@ enum StatusEngine: String {
     case Off    = "Выключен"
 }
 
-enum StatusDoor: String {
+enum StatusDoorAndWindow: String {
     case Open   = "Открыты"
     case Closed = "Закрыты"
 }
@@ -44,6 +44,9 @@ enum Trailer {
 enum Actions {
     case OpenDoor
     case ClosedDoor
+    
+    case OpenWindow
+    case ClosedWindow
     
     case OnEngine
     case OffEngine
@@ -74,7 +77,8 @@ struct SportCar {
     var currentTrunkVolume: UInt = 0
     
     var engineStatus: StatusEngine = .Off
-    var doorsStatus: StatusDoor = .Closed
+    var doorsStatus: StatusDoorAndWindow = .Closed
+    var windowStatus: StatusDoorAndWindow = .Closed
     
     
     // MARK: Методы SportCar
@@ -109,6 +113,7 @@ struct SportCar {
 
         Двигатель - \(engineStatus.rawValue)
         Двери - \(doorsStatus.rawValue)
+        Окна - \(windowStatus.rawValue)
         ------------------------------
         """
         print(str)
@@ -134,6 +139,22 @@ struct SportCar {
             } else {
                 self.doorsStatus = .Closed
                 message = "Двери теперь закрыты"
+            }
+        case .OpenWindow:
+            if windowStatus == .Open {
+                message = "Окна и так открыты"
+                flag = false
+            } else {
+                self.windowStatus = .Open
+                message = "Окна теперь открыты"
+            }
+        case .ClosedWindow:
+            if windowStatus == .Closed {
+                message = "Окна и так закрыты"
+                flag = false
+            } else {
+                self.windowStatus = .Closed
+                message = "Окна теперь закрыты"
             }
         case .OnEngine:
             if engineStatus == .On {
@@ -194,7 +215,8 @@ struct TrunkCar {
     var currentTrunkVolume: UInt = 0
     
     var engineStatus: StatusEngine = .Off
-    var doorsStatus: StatusDoor = .Closed
+    var doorsStatus: StatusDoorAndWindow = .Closed
+    var windowStatus: StatusDoorAndWindow = .Closed
     
     
     // MARK: Методы TrunkCar
@@ -238,6 +260,7 @@ struct TrunkCar {
 
         Двигатель - \(engineStatus.rawValue)
         Двери - \(doorsStatus.rawValue)
+        Окна - \(windowStatus.rawValue)
         ------------------------------
         """
         print(str)
@@ -263,6 +286,22 @@ struct TrunkCar {
             } else {
                 self.doorsStatus = .Closed
                 message = "Двери теперь закрыты"
+            }
+        case .OpenWindow:
+            if windowStatus == .Open {
+                message = "Окна и так открыты"
+                flag = false
+            } else {
+                self.windowStatus = .Open
+                message = "Окна теперь открыты"
+            }
+        case .ClosedWindow:
+            if windowStatus == .Closed {
+                message = "Окна и так закрыты"
+                flag = false
+            } else {
+                self.windowStatus = .Closed
+                message = "Окна теперь закрыты"
             }
         case .OnEngine:
             if engineStatus == .On {
@@ -365,6 +404,20 @@ var astonMartin = SportCar(
 )
 astonMartin.printInfo()
 
+var volvo = TrunkCar(
+    brand: "Volvo",
+    model: "FM",
+    year: 2021,
+    color: .Yellow,
+    transmission: .Automtic(type: .Variator),
+    engineVolume: 8000,
+    trailer: .Yes(volume: 3500),
+    fullTrunkVolume: 7500,
+    currentTrunkVolume: 0,
+    engineStatus: .Off,
+    doorsStatus: .Closed
+)
+volvo.printInfo()
 
 
 // MARK: Меняем свойства
@@ -399,23 +452,6 @@ porsche.printInfo()
 astonMartin.printInfo()
 
 
-
-var volvo = TrunkCar(
-    brand: "Volvo",
-    model: "FM",
-    year: 2021,
-    color: .Yellow,
-    transmission: .Automtic(type: .Variator),
-    engineVolume: 8000,
-    trailer: .Yes(volume: 3500),
-    fullTrunkVolume: 7500,
-    currentTrunkVolume: 0,
-    engineStatus: .Off,
-    doorsStatus: .Closed
-)
-volvo.printInfo()
-
-
 result = volvo.action(type: .LoadTrunk(volume: 100))
 print(result.message)
 result = volvo.action(type: .UnloadTrunk(volume: 10))
@@ -430,6 +466,8 @@ volvo.printInfo()
 result = volvo.action(type: .AddTrailer(volume: 5000))
 print(result.message)
 result = volvo.action(type: .LoadTrunk(volume: 10000))
+print(result.message)
+result = volvo.action(type: .OpenWindow)
 print(result.message)
 
 volvo.printInfo()
