@@ -255,8 +255,8 @@ struct TrunkCar {
         Трансмиссия:\t\t\(typeTransmission)
         Объем двигателя:\t\(engineVolume) см^3
 
-        Наличие прицепа:\t\t\(availabilityTrailer)
-        Общий объем багажника:\t\(fullTrunkVolume) литров \t заполнен на \(percentageOfOccupancy)%
+        Наличие прицепа:\t\(availabilityTrailer)
+        Общий объем кузова:\t\(fullTrunkVolume) литров \t заполнен на \(percentageOfOccupancy)%
 
         Двигатель - \(engineStatus.rawValue)
         Двери - \(doorsStatus.rawValue)
