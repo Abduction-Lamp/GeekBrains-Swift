@@ -49,7 +49,7 @@ struct Queue<T> {
     //
     subscript(_ index: UInt) -> T? {
         var element: T? = nil
-        if index <= count {
+        if index < count {
             element = container[Int(index)]
         }
         return element
@@ -79,6 +79,7 @@ for i in 0...9 {
 print(queueInt)
 print("")
 
+
 // subscript
 var index: UInt = 7
 if let element = queueInt[index] {
@@ -87,12 +88,15 @@ if let element = queueInt[index] {
     print("Queue[\(index)] = nil")
 }
 
-index = 70
+index = 10
 if let element = queueInt[index] {
     print("Queue[\(index)] = \(element)")
 } else {
     print("Queue[\(index)] = nil")
 }
+
+print(queueInt[1]!)
+print(queueInt[13])
 print("")
 
 
