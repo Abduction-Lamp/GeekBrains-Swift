@@ -31,7 +31,7 @@ struct Queue<T> {
     //
     func filter(_ predicate: (T) -> Bool) -> Queue<T> {
         var output = Queue<T>()
-        for element in container where predicate(element){
+        for element in container where predicate(element) {
             output.push(element)
         }
         return output
