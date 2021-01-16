@@ -6,9 +6,11 @@
 
 import Foundation
 
+// MARK: FIFO
+//
 struct Queue<T> {
     
-    var container = [T]()
+    private var container = [T]()
     var count: Int {
         return container.count
     }
@@ -25,10 +27,30 @@ struct Queue<T> {
         return element
     }
     
-    subscript(_ index: Int) -> T? {
+    // MARK: Замыкания
+    //
+    func filter(_ predicate: (T) -> Bool) -> Queue<T> {
+        var output = Queue<T>()
+        for element in container where predicate(element){
+            output.push(element)
+        }
+        return output
+    }
+    
+    func map(_ transform: (T) -> T) -> Queue<T> {
+        var output = Queue<T>()
+        for element in container {
+            output.push(transform(element))
+        }
+        return output
+    }
+        
+    // MARK: Сабскрипты
+    //
+    subscript(_ index: UInt) -> T? {
         var element: T? = nil
         if index <= count {
-            element = container[index]
+            element = container[Int(index)]
         }
         return element
     }
@@ -40,37 +62,63 @@ extension Queue : CustomStringConvertible {
         if count == 0 {
             str = "Очередь пустая"
         } else {
-            str = "Queue<\(type(of: container.first))>:\n" + container.description
+            str = "Очередь<\(type(of: container.first))> из \(count) элементов:\n" + container.description
         }
         return str
     }
 }
 
 
-// MARK: Работа с очередью
+// MARK: Работа с очередью Int
 //
-var queue = Queue<Int>()
+var queueInt = Queue<Int>()
 
 for i in 0...9 {
-    queue.push(i*100)
+    queueInt.push(i * 100)
 }
-print(queue)
+print(queueInt)
+print("")
 
-var index = 7
-if let element = queue[index] {
+// subscript
+var index: UInt = 7
+if let element = queueInt[index] {
     print("Queue[\(index)] = \(element)")
 } else {
     print("Queue[\(index)] = nil")
 }
 
 index = 70
-if let element = queue[index] {
+if let element = queueInt[index] {
     print("Queue[\(index)] = \(element)")
 } else {
     print("Queue[\(index)] = nil")
 }
+print("")
 
-while queue.count > 0 {
-    print(queue.pop()!)
+
+// filter + map
+print(queueInt.filter{ $0 >= 500 }.map{ $0 + 1 })
+print("")
+
+
+while queueInt.count > 0 {
+    print(queueInt.pop()!, terminator: " ")
 }
-print(queue)
+print("")
+print(queueInt)
+print("\n")
+
+
+// MARK: Работа с очередью String
+//
+var queueString = Queue<String>()
+
+queueString.push("Привет")
+queueString.push(", ")
+queueString.push("мир!")
+
+print(queueString.map{ $0.uppercased() })
+print("")
+print(queueString.filter{ $0.lowercased() == "привет" })
+print("")
+print(queueString.filter{ $0 == "привет" })
