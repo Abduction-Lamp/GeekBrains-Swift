@@ -141,3 +141,164 @@ if result.successfully {
 } else {
     print(result.error!.rawValue)
 }
+
+
+
+
+//  MARK:   Часть 2
+//          Есть банкомат, класс CashMachine, в нем хранятья деньги и БД с данными для идентификации
+//          Есть класс Card, описывает данные карты, в том читсле кол-во денег на счету
+//
+
+enum ErrorsCashMachine : String, Error {
+    case NonExistentAccount = "Такой счет несуществует"
+    case InvalidPin = "Неверный pin-код"
+    case NotEnoughMoneyInAccount = "Недостаточно денег на счету"
+    case NotEnoughMoneyAtATM = "Недостаточно денег в банкомате"
+    case NoСonnectionDB = "Нет соединение"
+}
+
+class Card {
+    
+    let account: Decimal
+    private let pin: UInt
+    private var money: Decimal
+    
+    init(account: Decimal, pin: UInt, money: Decimal) {
+        self.account = account
+        self.pin = pin
+        self.money = money
+    }
+    
+    func withdrawMoney(amount: Decimal, pin: UInt) throws -> Decimal {
+        guard self.pin == pin else {
+            throw ErrorsCashMachine.InvalidPin
+        }
+        guard money >= amount else {
+            throw ErrorsCashMachine.NotEnoughMoneyInAccount
+        }
+        
+        money -= amount
+        return amount
+    }
+    
+    func info() -> Decimal {
+        return money
+    }
+}
+
+class CashMachine {
+    
+    private var db = [Decimal : Card]()
+    private var totalAmountOfCash: Decimal
+    
+    
+    init() {
+        totalAmountOfCash = 1_000_000_000
+        
+        db[4000_1111_2222_0001] = Card(
+            account: 4000_1111_2222_0001,
+            pin: 1234,
+            money: 1_000_000
+        )
+        db[4000_1111_2222_0002] = Card(
+            account: 4000_1111_2222_0002,
+            pin: 4321,
+            money: 1_000
+        )
+        db[4000_1111_2222_0003] = Card(
+            account: 4000_1111_2222_0003,
+            pin: 1122,
+            money: 37_000_000_000
+        )
+    }
+    
+    
+    private func connect(account: Decimal) throws -> Card {
+        if db.isEmpty {
+            throw ErrorsCashMachine.NoСonnectionDB
+        }
+        guard let card = db[account] else {
+            throw ErrorsCashMachine.NonExistentAccount
+        }
+        
+        return card
+    }
+    
+    func getMoney(account: Decimal, amount: Decimal, pin: UInt) throws -> Decimal {
+        var output = Decimal(0)
+        do {
+            let card = try connect(account: account)
+            guard amount <= totalAmountOfCash else {
+                print(ErrorsCashMachine.NotEnoughMoneyAtATM.rawValue + " Вы можите снять \(totalAmountOfCash)")
+                throw ErrorsCashMachine.NotEnoughMoneyAtATM
+            }
+            output = try card.withdrawMoney(amount: amount, pin: pin)
+            totalAmountOfCash -= output
+        } catch ErrorsCashMachine.NoСonnectionDB {
+            print(ErrorsCashMachine.NoСonnectionDB.rawValue)
+        } catch ErrorsCashMachine.NonExistentAccount {
+            print(ErrorsCashMachine.NonExistentAccount.rawValue)
+        } catch ErrorsCashMachine.InvalidPin {
+            print(ErrorsCashMachine.InvalidPin.rawValue)
+        } catch ErrorsCashMachine.NotEnoughMoneyInAccount {
+            print(ErrorsCashMachine.NotEnoughMoneyInAccount.rawValue)
+        }
+        return output
+    }
+}
+
+
+
+//  MARK:   Создаем банкомат и пробуем снять с него денег
+//
+print("\n\n\nЧАСТЬ 2\n")
+
+let sber = CashMachine()
+
+var money = try? sber.getMoney(
+    account: 4000_1111_2222_0001,
+    amount: 1_000_000,
+    pin: 1234
+)
+print("Выданно:")
+print(money ?? "nil")
+print("")
+
+
+money = try? sber.getMoney(
+    account: 4000_1111_2222_0002,
+    amount: 1_000_000,
+    pin: 4321
+)
+print("Выданно:")
+print(money ?? "nil")
+print("")
+
+money = try? sber.getMoney(
+    account: 4000_1111_2222_0002,
+    amount: 1_000_000,
+    pin: 432
+)
+print("Выданно:")
+print(money ?? "nil")
+print("")
+
+money = try? sber.getMoney(
+    account: 4000_1111_2222_0000,
+    amount: 1_000_000,
+    pin: 4321
+)
+print("Выданно:")
+print(money ?? "nil")
+print("")
+
+
+money = try? sber.getMoney(
+    account: 4000_1111_2222_0003,
+    amount: 1_000_000_000,
+    pin: 1122
+)
+print("Выданно:")
+print(money ?? "nil")
+print("")
